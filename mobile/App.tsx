@@ -1,11 +1,42 @@
 import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
 import StackNavigator from "./src/navigations/StackNavigator";
+import * as SplashScreen from "expo-splash-screen";
+import { useFonts } from "expo-font";
+import { useEffect } from "react";
 
-export default function App() {
+SplashScreen.preventAutoHideAsync();
+
+const App = () => {
+  const [fontsLoaded] = useFonts({
+    "poppins-regular": require("./assets/fonts/Poppins-Regular.ttf"),
+    "poppins-black": require("./assets/fonts/Poppins-Black.ttf"),
+    "poppins-medium": require("./assets/fonts/Poppins-Medium.ttf"),
+    "poppins-light": require("./assets/fonts/Poppins-Light.ttf"),
+    "poppins-bold": require("./assets/fonts/Poppins-Bold.ttf"),
+    "poppins-semibold": require("./assets/fonts/Poppins-SemiBold.ttf"),
+    "poppins-extrabold": require("./assets/fonts/Poppins-ExtraBold.ttf"),
+  });
+
+  useEffect(() => {
+    const hideSplashScreen = async () => {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    };
+
+    hideSplashScreen();
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <StackNavigator />
     </NavigationContainer>
   );
 }
+
+export default App;
