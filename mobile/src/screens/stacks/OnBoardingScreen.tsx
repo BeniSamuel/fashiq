@@ -4,7 +4,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "../../navigations/StackNavigator";
 import PrimaryButton from "../../components/common/PrimaryButton";
 import { dimensions } from "../../theme/dimensions.theme";
-import { bg_colors } from "../../theme/color.theme";
+import { bg_colors, label_colors } from "../../theme/color.theme";
 import { StatusBar } from "expo-status-bar";
 
 type Props = NativeStackScreenProps<StackParamList, "Onboarding">;
@@ -12,7 +12,7 @@ type Props = NativeStackScreenProps<StackParamList, "Onboarding">;
 const OnboardingScreen = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
-      <StatusBar style="dark"/>
+      <StatusBar style="dark" />
       <Image
         source={require("../../../assets/images/onboarding-fashion.jpg")}
         style={styles.image}
@@ -20,7 +20,7 @@ const OnboardingScreen = ({ navigation }: Props) => {
       />
 
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Welcome to Fashiq 👗</Text>
+        <Text style={styles.title}>Welcome to Fashiq</Text>
         <Text style={styles.subtitle}>
           Discover, shop, and organize your dream wardrobe effortlessly.
         </Text>
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
   subtitle: {
     fontFamily: "poppins-regular",
     fontSize: 14,
-    color: "#555",
+    color: label_colors.normal_text,
     textAlign: "center",
-    lineHeight: 25
+    lineHeight: 25,
   },
 });

@@ -21,13 +21,15 @@ const SignupScreen = ({ navigation }: Props) => {
         <InputField placeholder="Password" secureTextEntry />
       </View>
 
-      <PrimaryButton title="Sign Up" onPress={() => console.log("Signup")} />
+      <View style={styles.option_details}>
+        <PrimaryButton title="Sign Up" onPress={() => console.log("Signup")} />
 
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text style={styles.loginText}>
-          Already have an account? <Text style={styles.loginLink}>Login</Text>
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.loginText}>
+            Already have an account? <Text style={styles.loginLink}>Login</Text>
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     display: "flex",
     flexDirection: "column",
-    gap: 12
+    gap: 15,
   },
   title: {
     fontFamily: "poppins-bold",
@@ -59,5 +61,10 @@ const styles = StyleSheet.create({
   loginLink: {
     fontFamily: "poppins-semibold",
     color: bg_colors.active_bg,
+  },
+  option_details: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 5,
   },
 });
