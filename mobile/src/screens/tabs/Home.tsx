@@ -41,7 +41,9 @@ export default Home
 const styles = StyleSheet.create({
   container: {
     paddingVertical: dimensions.height * 0.055,
-    paddingHorizontal: dimensions.width * 0.035
+    paddingHorizontal: dimensions.width * 0.035,
+    backgroundColor: "#fff",
+    flex: 1
   },
   greetings_text: {
     fontFamily: "poppins-semibold",
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
   input_container: {
     paddingVertical: dimensions.height * 0.012,
     paddingHorizontal: dimensions.width * 0.035,
-    backgroundColor: "rgba(224, 220, 221, 1)",
+    backgroundColor: "rgba(233, 227, 229, 0.51)",
     width: dimensions.width * 0.8,
     fontFamily: "poppins-medium",
     borderRadius: 10
