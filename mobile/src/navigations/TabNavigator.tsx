@@ -11,7 +11,7 @@ const TabNavigator = () => (
       headerShown: false,
       tabBarLabelStyle: { fontFamily: "poppins-semibold", fontSize: 11 },
       tabBarActiveTintColor: bg_colors.active_bg,
-      tabBarIcon: () => null
+      tabBarIcon: () => null,
     }}
   >
     <Tab.Screen name="Home" component={Home} />

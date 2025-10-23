@@ -23,7 +23,7 @@ const DrawerNavigator = () => (
         fontFamily: "poppins-medium"
       },
       drawerActiveBackgroundColor: bg_colors.active_bg,
-      drawerActiveTintColor: label_colors.active_color
+      drawerActiveTintColor: label_colors.button_text
     })}
   >
     <Drawer.Screen
