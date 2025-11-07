@@ -5,9 +5,6 @@ export class Payment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: Date, default: Date.now() })
-  done_at: Date;
-
   @Column()
   paid_by: string;
 
@@ -19,12 +16,10 @@ export class Payment {
 
   constructor(
     paid_by: string,
-    done_at: Date,
     amount: number,
     card_number: number
   ) {
     this.paid_by = paid_by;
-    this.done_at = done_at;
     this.amount = amount;
     this.card_number = card_number;
   }
