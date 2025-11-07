@@ -1,16 +1,57 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Switch } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Switch,
+  Alert,
+} from "react-native";
 import InputField from "../../components/common/InputField";
 import PrimaryButton from "../../components/common/PrimaryButton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackParamList } from "../../navigations/StackNavigator";
-import { bg_colors, label_colors } from "../../theme/color.theme";
+import { bg_colors } from "../../theme/color.theme";
+import fashiqApi from "../../api/fashiq.api";
 import { StatusBar } from "expo-status-bar";
+import * as SecureStore from "expo-secure-store"
 
 type Props = NativeStackScreenProps<StackParamList, "Login">;
 
 const LoginScreen = ({ navigation }: Props) => {
   const [remember, setRemember] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Alert.alert("Error", "Please fill in all fields.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await fashiqApi.post("/auth/login", { email, password });
+      const { success, accessToken, message } = response.data;
+
+      if (success) {
+        await SecureStore.setItem("token", accessToken);
+        Alert.alert("Success", message);
+        navigation.navigate("Main"); // to Home screen
+      } else {
+        Alert.alert("Error", "Invalid credentials");
+      }
+    } catch (err: any) {
+      console.error(err);
+      Alert.alert(
+        "Login failed",
+        err.response?.data?.message || "Something went wrong."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -18,8 +59,18 @@ const LoginScreen = ({ navigation }: Props) => {
       <Text style={styles.title}>Login to Fashiq</Text>
 
       <View>
-        <InputField placeholder="Email" keyboardType="email-address" />
-        <InputField placeholder="Password" secureTextEntry />
+        <InputField
+          placeholder="Email"
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <InputField
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
 
         <View style={styles.row}>
           <View style={styles.rememberContainer}>
@@ -38,10 +89,9 @@ const LoginScreen = ({ navigation }: Props) => {
 
       <View style={styles.option_details}>
         <PrimaryButton
-          title="Login"
-          onPress={() => navigation.navigate("Main")}
+          title={loading ? "Loading..." : "Login"}
+          onPress={handleLogin}
         />
-        
         <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
           <Text style={styles.signupText}>
             Don’t have an account?{" "}
@@ -61,8 +111,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 25,
     backgroundColor: "#fff",
-    display: "flex",
-    flexDirection: "column",
     gap: 15,
   },
   title: {
@@ -78,31 +126,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 25,
   },
-  rememberContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  rememberText: {
-    marginLeft: 6,
-    fontFamily: "poppins-regular",
-    fontSize: 13
-  },
-  forgot: {
-    fontFamily: "poppins-medium",
-    color: bg_colors.active_bg,
-  },
+  rememberContainer: { flexDirection: "row", alignItems: "center" },
+  rememberText: { marginLeft: 6, fontFamily: "poppins-regular", fontSize: 13 },
+  forgot: { fontFamily: "poppins-medium", color: bg_colors.active_bg },
   signupText: {
     textAlign: "center",
     marginTop: 20,
     fontFamily: "poppins-regular",
   },
-  signupLink: {
-    fontFamily: "poppins-semibold",
-    color: bg_colors.active_bg,
-  },
-  option_details: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 5,
-  },
+  signupLink: { fontFamily: "poppins-semibold", color: bg_colors.active_bg },
+  option_details: { flexDirection: "column", gap: 5 },
 });
