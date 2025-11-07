@@ -19,7 +19,7 @@ export class ItemService {
   }
 
   async createProduct (itemDto: ItemDto): Promise<Item> {
-   const newItem = new Item(itemDto.name, itemDto.description, itemDto.rating, itemDto.price);
+   const newItem = new Item(itemDto.name, itemDto.description, itemDto.rating, itemDto.price, itemDto.size, itemDto.color);
    return this.itemRepository.save(newItem);
   }
 }
