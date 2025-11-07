@@ -21,9 +21,6 @@ export class Item {
   description: string;
 
   @Column()
-  cover: string | string[];
-
-  @Column()
   rating: number;
 
   @Column({ enum: Size, default: Size.MD })
