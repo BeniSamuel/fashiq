@@ -18,14 +18,11 @@ export class Users {
   @Column({ enum: Role, default: Role.BUYER })
   role: Role;
 
-  @Column()
+  @Column({ nullable: true })
   phone: number;
 
-  @Column()
+  @Column({ nullable: true })
   address: string;
-
-  @Column({ type: Date, default: Date.now() })
-  joined_at: Date;
 
   constructor(
     name: string,
@@ -33,13 +30,11 @@ export class Users {
     password: string,
     phone: number,
     address: string,
-    joined_at: Date
   ) {
     this.name = name;
     this.email = email;
     this.password = password;
     this.phone = phone;
     this.address = address;
-    this.joined_at = joined_at;
   }
 }
